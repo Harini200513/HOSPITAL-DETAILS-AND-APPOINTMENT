@@ -1,0 +1,141 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>doctor registration</title>
+<script type="text/javascript">
+function spec()
+{
+	
+	var c = document.getElementById("spec");
+	c.innerHTML = "";
+	var xmlreq = new XMLHttpRequest();
+	xmlreq.open("post","./SpecializationRetrieveServlet",true);
+	xmlreq.send();
+	
+	xmlreq.onreadystatechange = function ()
+	{
+		
+		if(xmlreq.status==200&&xmlreq.readyState==4)
+		{
+
+			var option = document.createElement("option");
+			option.text = "select";
+			option.value = "select";
+			c.add(option);
+			
+			var res = eval("("+xmlreq.responseText+")");
+			var secques = res.spec;
+
+			for(var i=0;i<secques.length;i++)
+			{
+				var option = document.createElement("option");
+				option.text = secques[i].specname;
+				option.value = secques[i].specid;
+				c.add(option);
+			}
+		}
+	}
+}
+function hospital()
+{
+	var s = document.getElementById("spec").value;
+	
+	var c = document.getElementById("hos");
+	c.innerHTML = "";
+	var xmlreq = new XMLHttpRequest();
+	xmlreq.open("post","./HospitalRetrieveServlet?s="+s+"",true);
+	xmlreq.send();
+	
+	xmlreq.onreadystatechange = function ()
+	{
+		
+		if(xmlreq.status==200&&xmlreq.readyState==4)
+		{
+
+			var option = document.createElement("option");
+			option.text = "select";
+			option.value = "select";
+			c.add(option);
+			
+			var res = eval("("+xmlreq.responseText+")");
+			var secques = res.hos;
+
+			for(var i=0;i<secques.length;i++)
+			{
+				var option = document.createElement("option");
+				option.text = secques[i].hosname;
+				option.value = secques[i].hosid;
+				c.add(option);
+			}
+		}
+	}
+}
+</script>
+<style>
+body{
+background-image:url("./images/background-heart-beating-line-medicine-36023802.jpg" ); 
+  }
+  a:link {color:black;background-color:rgb(220,220,220);}      /* unvisited link */
+a:visited {color:black;}  /* visited link */
+a:hover {color:green;}  /* mouse over link */
+a:active {color:green;}  /* selected link */
+a:link {text-decoration:none;}    /* unvisited link */
+a:visited {text-decoration:none;} /* visited link */
+a:hover {text-decoration:underline;}   /* mouse over link */
+a:active {text-decoration:underline;}  /* selected link */
+</style>
+</head>
+<body bgcolor="99FF99" onload="spec();"> 
+<table>
+<tr align="center">
+<td><a href="hospitalregistration.html">Addhospitals</a></td>
+<td><a href="doctorregistration.html">Adddoctors</a></td>
+<td><a href="viewfeedback.jsp">view feedback</a></td>
+<td><a href="home.html">logout</a></td>
+</tr>
+</table>
+<center><h1><font color=green>Doctor registration</font></h1></center>
+
+<br></br>
+<form action="DoctorRegistrationServlet" method="post">
+		<div align="center">
+		<table>
+		<tr>
+	<td>
+	<b>Specialization*:</b></td>
+	<td>
+	<select name="spec" id="spec" onchange="hospital()">
+	<option value="secques">select</option>
+	</select>
+	</td>
+	</tr>	
+	<td>
+	<b>hospital*:</b></td>
+	<td>
+	<select name="hos" id="hos">
+	<option value="secques">select</option>
+	</select>
+	</td>
+	</tr>	
+		<tr><td>doctor name</td><td><input type="text" name="dname"></input></td></tr>
+		<tr><td>doctor password</td><td><input type="text" name="dpass"></input></textarea></td></tr>
+		<tr><td>doctor qualification</td><td><input type="text" name="dqual"></input></td></tr>
+		<tr><td>doctor experience</td><td><input type="text" name="dexp"></input></td></tr>
+			<tr><td>doctor description</td><td><input type="text" name="ddesc"></input></td></tr>
+	<tr><td>doctor timings </td><td><select name="times">
+	<option>10:00AM to 02:00PM</option>
+	<option>12:00PM to 04:00PM</option>
+	<option>06:00PM to 08:00PM</option>
+	<option>10:00AM to 09:00PM</option>
+	</select></td></tr>
+	
+		
+		</table>
+		
+		<br></br>
+		<input type="submit" value="submit" />
+		</div>
+		</form>
+</body>
+</html>

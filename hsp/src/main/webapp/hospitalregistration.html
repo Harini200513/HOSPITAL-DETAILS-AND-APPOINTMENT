@@ -1,0 +1,227 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>add hospitals</title>
+<script type="text/javascript">
+function country()
+{
+	
+	var c = document.getElementById("country");
+	c.innerHTML = "";
+	var xmlreq = new XMLHttpRequest();
+	xmlreq.open("post","./CountryRetrieveServelt",true);
+	xmlreq.send();
+	xmlreq.onreadystatechange = function ()
+	{
+		if(xmlreq.status==200&&xmlreq.readyState==4)
+		{
+
+			var option = document.createElement("option");
+			option.text = "select";
+			option.value = "select";
+			c.add(option);
+			
+			var res = eval("("+xmlreq.responseText+")");
+			var country = res.country;
+
+			
+			
+			for(var i=0;i<country.length;i++)
+			{
+				var option = document.createElement("option");
+				option.text = country[i].coname;
+				option.value = country[i].coid;
+				c.add(option);
+			}
+		}
+	}
+}
+function states()
+{
+
+	var co = document.getElementById("country").value;
+	var s = document.getElementById("state");
+	s.innerHTML = "";
+	
+
+	var xmlreq = new XMLHttpRequest();
+	xmlreq.open("post","./StateRetrieveServlet?co="+co+"",true);
+	xmlreq.send();
+	
+	xmlreq.onreadystatechange = function ()
+	{
+		if(xmlreq.status==200&&xmlreq.readyState==4)
+		{
+
+			alert(xmlreq.responseText);
+			var option = document.createElement("option");
+			option.text = "select";
+			option.value = "select";
+			s.add(option);
+			
+			var res = eval("("+xmlreq.responseText+")");
+			var country = res.state;
+
+			
+			
+			for(var i=0;i<country.length;i++)
+			{
+				var option = document.createElement("option");
+				option.text = country[i].sname;
+				option.value = country[i].sid;
+				s.add(option);
+			}
+		}
+	}
+	
+}
+function citys()
+{
+
+	var s = document.getElementById("state").value;
+	var c = document.getElementById("city");
+	c.innerHTML = "";
+	var xmlreq = new XMLHttpRequest();
+	xmlreq.open("post","./CityRetrieveServlet?s="+s+"",true);
+	xmlreq.send();
+	xmlreq.onreadystatechange = function ()
+	{
+		if(xmlreq.status==200&&xmlreq.readyState==4)
+		{
+
+			var option = document.createElement("option");
+			option.text = "select";
+			option.value = "select";
+			c.add(option);
+			
+			var res = eval("("+xmlreq.responseText+")");
+			var city = res.city;
+
+			
+			
+			for(var i=0;i<city.length;i++)
+			{
+				var option = document.createElement("option");
+				option.text = city[i].cname;
+				option.value = city[i].cid;
+				c.add(option);
+			}
+		}
+	}
+}
+
+function spec()
+{
+	
+	var c = document.getElementById("spec");
+	c.innerHTML = "";
+	var xmlreq = new XMLHttpRequest();
+	xmlreq.open("post","./SpecializationRetrieveServlet",true);
+	xmlreq.send();
+	
+	xmlreq.onreadystatechange = function ()
+	{
+		
+		if(xmlreq.status==200&&xmlreq.readyState==4)
+		{
+
+			var option = document.createElement("option");
+			option.text = "select";
+			option.value = "select";
+			c.add(option);
+			
+			var res = eval("("+xmlreq.responseText+")");
+			var secques = res.spec;
+
+			for(var i=0;i<secques.length;i++)
+			{
+				var option = document.createElement("option");
+				option.text = secques[i].specname;
+				option.value = secques[i].specid;
+				c.add(option);
+			}
+		}
+	}
+}
+</script>
+<style>
+a:link {color:black;background-color:rgb(220,220,220);}      /* unvisited link */
+a:visited {color:black;}  /* visited link */
+a:hover {color:green;}  /* mouse over link */
+a:active {color:green;}  /* selected link */
+a:link {text-decoration:none;}    /* unvisited link */
+a:visited {text-decoration:none;} /* visited link */
+a:hover {text-decoration:none;}   /* mouse over link */
+a:active {text-decoration:underline;}  /* selected link */
+body{
+background-image:url("./images/background-heart-beating-line-medicine-36023802.jpg" ); 
+  }
+</style>
+</head>
+<body  onload="country();spec();"> 
+<table>
+<tr>
+<td><a href="hospitalregistration.html">Addhospitals  </a></td>
+<td><a href="doctorregistration.html">Adddoctors  </a></td>
+<td><a href="viewfeedback.jsp">view feedback  </a></td>
+<td><a href="home.html">logout  </a></td>
+</tr>
+</table>
+<center><h1><font color=green>Hospital registration</font></h1></center>
+<hr></hr>
+<br></br>
+
+<form action="HospitalRegistrationServlet" method="post">
+		<div align="center">
+		<table>
+		
+		<tr><td>Hospital name</td><td><input type="text" name="hname"></input></td></tr>
+		<tr><td>Hospital description</td><td><textarea  cols=10 rows=2 name="hdesc"></textarea></td></tr>
+		<tr><td>Hospital address</td><td><textarea  cols=10 rows=2 name="hadd"></textarea></td></tr>
+		<tr><td>Hospital contactnumber</td><td><input type="number" name="hcon"></input></td></tr>
+		<tr>
+	<td>
+	<b>Country*:</b></td>
+	<td>
+	<select name="Country" id="country" onchange="states()">
+	<option >select</option>
+	</select>
+	</td>
+	</tr>
+	<tr>
+	<td>
+	<b>State*:</b></td>
+	<td>
+	<select name="State" id="state" onchange="citys()">
+	<option >select</option>
+	</select>
+	</td>
+	</tr>
+	<tr>
+	<td>
+	<b>City*:</b></td>
+	<td>
+	<select name="city" id="city">
+	<option value="City">select</option>
+	</select>
+	</td>
+	</tr>	
+	<tr>
+	<td>
+	<b>Specialization*:</b></td>
+	<td>
+	<select name="spec" id="spec">
+	<option value="secques">select</option>
+	</select>
+	</td>
+	</tr>	
+		
+		</table>
+		
+		<br></br>
+		<input type="submit" value="submit" />
+		</div>
+		</form>
+</body>
+</html>

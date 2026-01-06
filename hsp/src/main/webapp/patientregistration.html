@@ -1,0 +1,188 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>patient registration</title>
+<script type="text/javascript">
+function country()
+{
+	
+	var c = document.getElementById("country");
+	c.innerHTML = "";
+	var xmlreq = new XMLHttpRequest();
+	xmlreq.open("post","./CountryRetrieveServelt",true);
+	xmlreq.send();
+	xmlreq.onreadystatechange = function ()
+	{
+		if(xmlreq.status==200&&xmlreq.readyState==4)
+		{
+
+			var option = document.createElement("option");
+			option.text = "select";
+			option.value = "select";
+			c.add(option);
+			
+			var res = eval("("+xmlreq.responseText+")");
+			var country = res.country;
+
+			
+			
+			for(var i=0;i<country.length;i++)
+			{
+				var option = document.createElement("option");
+				option.text = country[i].coname;
+				option.value = country[i].coid;
+				c.add(option);
+			}
+		}
+	}
+}
+function states()
+{
+
+	var co = document.getElementById("country").value;
+	var s = document.getElementById("state");
+	s.innerHTML = "";
+	
+
+	var xmlreq = new XMLHttpRequest();
+	xmlreq.open("post","./StateRetrieveServlet?co="+co+"",true);
+	xmlreq.send();
+	
+	xmlreq.onreadystatechange = function ()
+	{
+		if(xmlreq.status==200&&xmlreq.readyState==4)
+		{
+
+			alert(xmlreq.responseText);
+			var option = document.createElement("option");
+			option.text = "select";
+			option.value = "select";
+			s.add(option);
+			
+			var res = eval("("+xmlreq.responseText+")");
+			var country = res.state;
+
+			
+			
+			for(var i=0;i<country.length;i++)
+			{
+				var option = document.createElement("option");
+				option.text = country[i].sname;
+				option.value = country[i].sid;
+				s.add(option);
+			}
+		}
+	}
+	
+}
+function citys()
+{
+
+	var s = document.getElementById("state").value;
+	var c = document.getElementById("city");
+	c.innerHTML = "";
+	var xmlreq = new XMLHttpRequest();
+	xmlreq.open("post","./CityRetrieveServlet?s="+s+"",true);
+	xmlreq.send();
+	xmlreq.onreadystatechange = function ()
+	{
+		if(xmlreq.status==200&&xmlreq.readyState==4)
+		{
+
+			var option = document.createElement("option");
+			option.text = "select";
+			option.value = "select";
+			c.add(option);
+			
+			var res = eval("("+xmlreq.responseText+")");
+			var city = res.city;
+
+			
+			
+			for(var i=0;i<city.length;i++)
+			{
+				var option = document.createElement("option");
+				option.text = city[i].cname;
+				option.value = city[i].cid;
+				c.add(option);
+			}
+		}
+	}
+}
+</script>
+<style>
+body{background-image:url("./images/19159207-Rays-of-light-in-the-corridor-of-the-hospital--Stock-Photo-hospital-medical-background.jpg");}
+</style>
+</head>
+<body onload="country()"><br><br><br>
+<form action="PatientRegistrationServlet" method="post">
+
+<center><h1 style="color:#008000">Patient Registration</h1></center>
+<center>
+<table>
+<tr><td><b>Username</b></td>
+<td><input type="text" name="Username" value=""></input></td></tr>
+
+<tr><td><b>First name</b></td>
+<td><input type="text" name="Firstname"></input></td></tr>
+
+<tr><td><b>Last name</b></td>
+<td><input type="text" name="Lastname"></input></td></tr>
+
+
+<tr><td><b>Password</b></td>
+<td><input type="password" name="Password"></input></td></tr>
+
+<tr><td><b>Gender</b></td>
+<td><INPUT TYPE="Radio" Name="Gender" Value="Male">Male 
+<INPUT TYPE="Radio" Name="Gender" Value="Female">Female</td></tr>
+
+<tr><td><b>email</b></td>
+<td><input type="email" name="email"></input></td></tr>
+
+<tr><td><b>Phone number</b></td>
+<td><input type="text" name="Phonenumber"></input></td></tr>
+
+<tr><td><b>Address</b></td>
+<td><textarea rows="4" cols="17" name="addr"></textarea></td></tr>
+	<tr>
+	<td>
+	<b>Country*:</b></td>
+	<td>
+	<select name="Country" id="country" onchange="states()">
+	<option >select</option>
+	</select>
+	</td>
+	</tr>
+	<tr>
+	<td>
+	<b>State*:</b></td>
+	<td>
+	<select name="State" id="state" onchange="citys()">
+	<option >select</option>
+	</select>
+	</td>
+	</tr>
+	<tr>
+	<td>
+	<b>City*:</b></td>
+	<td>
+	<select name="city" id="city">
+	<option value="City">select</option>
+	</select>
+	</td>
+	</tr>	
+
+</center></table>
+
+
+<center><table><tr><td><input type="Submit" value="Submit"></input>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="Reset" value="Reset"></input></td></tr>
+</table>
+</center>
+</form>
+
+
+</body>
+</html>

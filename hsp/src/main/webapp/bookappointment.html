@@ -1,0 +1,75 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>book appointment</title>
+<script type="text/javascript">
+function test()
+{
+	
+	alert(localStorage.did);
+	document.getElementById("did").value=localStorage.did;
+}
+</script>
+<style>
+body{background-image:url("./images/19159207-Rays-of-light-in-the-corridor-of-the-hospital--Stock-Photo-hospital-medical-background.jpg");}
+</style>
+<link href="css/ddmenu.css" rel="stylesheet" type="text/css" />
+    <script src="js/ddmenu.js" type="text/javascript"></script>
+
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<style>
+a:link {color:black;background-color:rgb(220,220,220);}      /* unvisited link */
+a:visited {color:black;}  /* visited link */
+a:hover {color:green;}  /* mouse over link */
+a:active {color:green;}  /* selected link */
+a:link {text-decoration:none;}    /* unvisited link */
+a:visited {text-decoration:none;} /* visited link */
+a:hover {text-decoration:none;}   /* mouse over link */
+a:active {text-decoration:underline;}  /* selected link */
+body{background-image:url("./images/19159207-Rays-of-light-in-the-corridor-of-the-hospital--Stock-Photo-hospital-medical-background.jpg");}
+</style>
+
+</head>
+<body onload="test()">
+<nav id="ddmenu">
+
+    <ul>
+     <li><a href="addaccountdetails.html"><b>Add Account Info</b></a></li>
+	 <li><a href="serachdoctorsbylocation.html"><b>Serach hospitals</b></a></li>
+	 <li><a href="feedback.html"><b>feedback</b></a></li>
+	 <li><a href="home.html"><b>logout</b></a></li>
+		
+</ul>
+</nav>
+<form action="AppointmentBooking" method="post">
+<center><h1><font color=green>Book appointment</font></h1></center>
+<br></br>
+<br></br>
+<center><input type="hidden" id="did" name="did">
+<tabel>
+<tr>
+<td>Select Date:</td><td><input type="date" name="bdate"></input></td></tr>
+
+<tr>
+<td>Select Time:</td><td><select name="time">
+
+<option>10:00 AM</option>
+<option>11:00 AM</option>
+<option>12:00 PM</option>
+<option>02:00 PM</option>
+<option>03:00 PM</option>
+<option>04:00 PM</option>
+<option>05:00 PM</option>
+<option>06:00 PM</option>
+<option>07:00 PM</option>
+<option>08:00 PM</option>
+<option>09:00 PM</option>
+
+</select></td></tr>
+
+<tr><td></td><input type="submit" value="Book"></input></tr>
+</tabel></center>
+</form>
+</body>
+</html>
